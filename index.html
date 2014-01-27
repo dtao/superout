@@ -9,8 +9,6 @@
 
             request.addEventListener('load', function() {
                 var updates = JSON.parse(request.responseText);
-                console.log('Updates:');
-                console.dir(updates);
                 addUpdatesToDOM(updates);
             });
 
