@@ -38,8 +38,14 @@ var proc = spawn(args[0], args.slice(1), {
 });
 
 proc.stdout.setEncoding('utf8');
+
+var counter = 1;
 proc.stdout.on('data', function(data) {
-  updates.push(data);
+  updates.push({
+    id: counter++,
+    timestamp: Date.now(),
+    message: data
+  });
 });
 
 console.log('Go to http://localhost:8080');
