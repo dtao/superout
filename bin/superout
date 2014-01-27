@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+var http  = require('http'),
+    fs    = require('fs'),
+    path  = require('path'),
+    spawn = require('child_process').spawn;
+
+var html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
+
+var updates = [];
+
+var server = http.createServer(function(req, res) {
+  console.log('Received request: ' + Object.keys(req));
+
+  switch (req.url) {
+    case '/':
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.write(html);
+      res.end();
+      break;
+
+    case '/updates':
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.write(JSON.stringify(updates));
+      updates = [];
+      res.end();
+      break;
+
+    default:
+      throw 'Unrecognized request path: "' + req.url + '"';
+  }
+});
+
+var proc = spawn('node', ['test.js'], {
+  cwd: process.cwd()
+});
+
+proc.stdout.setEncoding('utf8');
+proc.stdout.on('data', function(data) {
+  console.log('Got an update! ' + data);
+  updates.push(data);
+});
+
+console.log('Go to http://localhost:8080');
+server.listen(8080);

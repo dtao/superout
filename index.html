@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function pollForUpdates() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/updates');
+
+            request.addEventListener('load', function() {
+                var updates = JSON.parse(request.responseText);
+                console.log('Updates:');
+                console.dir(updates);
+                addUpdatesToDOM(updates);
+            });
+
+            request.send();
+        }
+
+        function addUpdatesToDOM(updates) {
+            updates.forEach(addUpdateToDOM);
+        }
+
+        function addUpdateToDOM(update) {
+            var element = document.createElement('DIV');
+            element.className = 'update';
+            element.textContent = update;
+            document.body.appendChild(element);
+        }
+
+        setInterval(pollForUpdates, 1000);
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

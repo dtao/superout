@@ -1,0 +1,8 @@
+{
+  "name": "superout",
+  "description": "When stdout just isn't enough",
+  "version": "0.1.0",
+  "bin": {
+    "superout": "bin/superout"
+  }
+}
