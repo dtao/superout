@@ -5,7 +5,9 @@ var http  = require('http'),
     path  = require('path'),
     spawn = require('child_process').spawn;
 
-var html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
+var html = fs.readFileSync(path.join(__dirname, '../resources/index.html'), 'utf8'),
+    css  = fs.readFileSync(path.join(__dirname, '../resources/styles.css'), 'utf8'),
+    js   = fs.readFileSync(path.join(__dirname, '../resources/script.js'), 'utf8');
 
 var updates = [];
 
@@ -21,6 +23,18 @@ var server = http.createServer(function(req, res) {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.write(JSON.stringify(updates));
       updates = [];
+      res.end();
+      break;
+
+    case '/styles.css':
+      res.writeHead(200, { 'Content-Type': 'text/css' });
+      res.write(css);
+      res.end();
+      break;
+
+    case '/script.js':
+      res.writeHead(200, { 'Content-Type': 'text/javascript' });
+      res.write(js);
       res.end();
       break;
 

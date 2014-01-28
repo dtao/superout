@@ -1,0 +1,23 @@
+th.id,
+td.id {
+  width: 100px;
+}
+
+th.message,
+td.message {
+  /* I have no idea why this works :( */
+  max-width: 1px;
+}
+
+th.timestamp,
+td.timestamp {
+  width: 160px;
+}
+
+td.message {
+  font-family: monospace;
+
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
