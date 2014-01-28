@@ -28,7 +28,7 @@ function addUpdateToDOM(update) {
 
   var timestampCell = document.createElement('TD');
   timestampCell.className = 'timestamp';
-  timestampCell.textContent = new Date(update.timestamp).toLocaleString();
+  timestampCell.textContent = new Date(update.timestamp).toLocaleTimeString();
 
   row.appendChild(idCell);
   row.appendChild(messageCell);
