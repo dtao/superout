@@ -20,4 +20,14 @@ td.message {
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  cursor: pointer;
+}
+
+tr.expanded td {
+  background-color: #def;
+}
+
+tr.expanded td.message {
+  white-space: pre;
 }

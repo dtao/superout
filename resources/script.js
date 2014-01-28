@@ -41,9 +41,12 @@ function forEach(collection, callback) {
   Array.prototype.forEach.call(collection, callback);
 }
 
+function escapeRegex(pattern) {
+  return pattern.replace(/([\\\/\^\$\[\]\(\)\{\}\-])/g, '\\$1');
+}
+
 function createMatcher(query) {
-  var escaped = query.replace(/([\\\/\^\$\[\]\(\)\{\}\-])/g, '\\$1');
-  return new RegExp(escaped, 'i');
+  return new RegExp(escapeRegex(query), 'i');
 }
 
 function rowMatches(row, matcher) {
@@ -89,6 +92,36 @@ function filterRows() {
 
 filterRows = debounce(filterRows);
 
+function hasClass(element, className) {
+  var matcher = new RegExp('\\b' + escapeRegex(className) + '\\b');
+  return matcher.test(element.className);
+}
+
+function addClass(element, className) {
+  element.classList.add(className);
+}
+
+function removeClass(element, className) {
+  element.classList.remove(className);
+}
+
+function toggleClass(element, className) {
+  if (!hasClass(element, className)) {
+    addClass(element, className);
+  } else {
+    removeClass(element, className);
+  }
+}
+
 var filterInput = document.querySelector('input[name="filter"]');
 filterInput.addEventListener('keyup', filterRows);
 filterInput.addEventListener('change', filterRows);
+
+var table = document.getElementById('table');
+table.addEventListener('click', function(e) {
+  var target = e.target;
+
+  if (target.nodeName === 'TD' && /message/.test(target.className)) {
+    toggleClass(target.parentNode, 'expanded');
+  }
+});
