@@ -16,7 +16,8 @@ function addUpdatesToDOM(updates) {
 
 function addUpdateToDOM(update) {
   var row = document.createElement('TR');
-  
+  row.className = update.type;
+
   var idCell = document.createElement('TD');
   idCell.className = 'id';
   idCell.textContent = update.id;
